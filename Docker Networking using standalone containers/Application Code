@@ -1,0 +1,23 @@
+from flask import Flask
+import mysql.connector
+import time
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    for i in range(5):
+        try:
+            conn = mysql.connector.connect(
+                host="mysql",
+                user="root",
+                password="root",
+                database="mydb"
+            )
+            return "Connected to MySQL successfully!"
+        except Exception as e:
+            time.sleep(2)
+    return "Failed to connect to MySQL"
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
