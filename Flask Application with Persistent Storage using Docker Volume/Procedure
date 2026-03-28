@@ -1,0 +1,63 @@
+STEPS:
+
+🔹 Step 1: Login to EC2
+            ssh -i <key.pem> ubuntu@<EC2-IP>
+🔹 Step 2: Install Docker
+            sudo apt update
+            sudo apt install docker.io -y
+            sudo systemctl start docker
+            sudo systemctl enable docker
+            sudo usermod -aG docker ubuntu
+
+🔹 Step 3: Create Project Folder
+            mkdir docker-volume-flask
+            cd docker-volume-flask
+
+🔹 Step 4: Create Flask App
+            nano app.py
+                from flask import Flask
+                import os
+                
+                app = Flask(__name__)
+                
+                FILE_PATH = "/data/data.txt"
+                
+                @app.route('/')
+                def write_data():
+                    with open(FILE_PATH, "a") as f:
+                        f.write("Data stored in volume\n")
+                    return "Data written successfully!"
+                
+                if __name__ == "__main__":
+                    app.run(host='0.0.0.0', port=5000)
+
+🔹 Step 5: Create requirements file
+            nano requirements.txt
+                flask
+
+🔹 Step 6: Create Dockerfile
+            nano Dockerfile
+                FROM python:3.9-slim
+                
+                WORKDIR /app
+                
+                COPY . .
+                
+                RUN pip install -r requirements.txt
+                
+                CMD ["python", "app.py"]
+
+🔹 Step 7: Build Image
+               docker build -t flask-volume-app .
+
+🔹 Step 8: Run Container with Volume
+              docker run -d -p 5000:5000 -v myvolume:/data flask-volume-app
+
+🔹Step 9: Test
+              http://<EC2-IP>:5000
+
+🔹 Step 10: Verify Data
+    
+              Run:
+                docker exec -it <container_id> bash
+                cat /data/data.txt
