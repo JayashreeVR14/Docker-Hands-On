@@ -1,0 +1,4 @@
+ubuntu@ip-172-31-12-163:~/docker-env-app$ docker ps -a
+CONTAINER ID   IMAGE           COMMAND                  CREATED          STATUS                      PORTS                                         NAMES
+50d13a3aea6e   flask_env_app   "python app.py"          7 minutes ago    Up 7 minutes                0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp   exciting_edison
+
