@@ -1,0 +1,46 @@
+STEPS:
+
+🔹 Step 1: Create Project Folder
+              mkdir docker-env-app
+              cd docker-env-app
+
+🔹 Step 2: Create Flask App
+              nano app.py
+                  import os
+                  from flask import Flask
+                  
+                  app = Flask(__name__)
+                  
+                  @app.route('/')
+                  def home():
+                      app_name = os.getenv("APP_NAME", "DefaultApp")
+                      return f"Hello from {app_name}"
+                  
+                  if __name__ == "__main__":
+                      print("Application is starting...")
+                      app.run(host='0.0.0.0', port=5000)
+
+🔹 Step 3: Create Requirements File
+               nano requirements.txt
+                    flask
+
+🔹 Step 4: Create Dockerfile
+              nano Dockerfile
+                    FROM python:3.9-slim
+                    
+                    WORKDIR /app
+                    
+                    COPY . .
+                    
+                    RUN pip install -r requirements.txt
+                    
+                    CMD ["python", "app.py"]
+
+🔹 Step 5: Build Docker Image
+              docker build -t flask-env-app .
+
+🔹 Step 6: Run Container with Environment Variable
+              docker run -d -p 5000:5000 -e APP_NAME=MyDockerApp flask-env-app
+
+🔹 Step 7: Access Application
+              http://<EC2-IP>:5000
