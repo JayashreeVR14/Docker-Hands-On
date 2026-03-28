@@ -5,7 +5,8 @@ To demonstrate container-to-container communication and perform basic database o
 🔹 Step 1: Create Docker Network
               docker network create mynetwork
 🔹 Step 2: Run MySQL Container
-              docker run -d --name mysql --sql:5.7
+              docker run -d --name mysql --network mynetwork -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=mydb mysql:5.7
+
 🔹 Step 3: Create Flask Application from app.py
 
 🔹 Step 4: Create requirements.txt
