@@ -1,0 +1,45 @@
+STEPS:
+
+🔹 Step 1: Launch and Connect to EC2
+            Connected to EC2 instance using SSH.
+              ssh -i <key.pem> ubuntu@<EC2-IP>
+
+🔹 Step 2: Install Docker
+              sudo apt update
+              sudo apt install docker.io -y
+              sudo systemctl start docker
+              sudo systemctl enable docker
+
+🔹 Step 3: Create Project Directory
+              mkdir docker-app
+              cd docker-app
+
+🔹 Step 4: Create Flask Application
+              from flask import Flask
+              app = Flask(__name__)
+              
+              @app.route('/')
+              def home():
+                  return "Hello from Docker!"
+              
+              if __name__ == "__main__":
+                  app.run(host='0.0.0.0', port=5000)
+
+🔹 Step 5: Create Requirements File
+                flask
+
+🔹 Step 6: Create Dockerfile
+              FROM python:3.9-slim
+              WORKDIR /app
+              COPY . .
+              RUN pip install -r requirements.txt
+              CMD ["python", "app.py"]
+
+🔹 Step 7: Build Docker Image
+              docker build -t my-app .
+
+🔹 Step 8: Run Docker Container
+            docker run -d -p 5000:5000 my-app
+
+🔹 Step 9: Access Application
+            http://<EC2-IP>:5000
