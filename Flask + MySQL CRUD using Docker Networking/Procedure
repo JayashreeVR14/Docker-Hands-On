@@ -1,0 +1,30 @@
+Objective
+
+To demonstrate container-to-container communication and perform basic database operations (Create, Insert, Select) using Flask and MySQL.
+
+🔹 Step 1: Create Docker Network
+              docker network create mynetwork
+🔹 Step 2: Run MySQL Container
+              docker run -d --name mysql --sql:5.7
+🔹 Step 3: Create Flask Application from app.py
+
+🔹 Step 4: Create requirements.txt
+            flask
+            mysql-connector-python
+
+🔹 Step 5: Create Dockerfile
+
+🔹 Step 6: Build Flask Image
+          docker build -t flaskapp .
+
+🔹 Step 7: Run Flask Container
+          docker run -d --name flaskapp --network mynetwork -p 5000:5000 flaskapp
+
+🔹 Step 8: Verify Containers
+          docker ps
+
+🔹 Step 9: Access Application
+            
+            Open browser:
+            
+            http://localhost:5000
